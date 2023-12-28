@@ -1,7 +1,10 @@
 <?php
 
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
 use App\Http\Controllers\CustomerController;
+use App\Http\Middleware\TokenVerificationMiddleware;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -15,7 +18,33 @@ use App\Http\Controllers\CustomerController;
 */
 
 
-Route::view("/","pages.customer");
+
+
+
+
+
+
+
+//Atuntacion
+// Page Route
+Route::view('/Registration','pages.auth.registration-page');
+Route::view('/Login','pages.auth.login-page');
+Route::view('/Profile','pages.dashboard.profile-page')->middleware([TokenVerificationMiddleware::class]);
+
+
+//Atuntacion
+// Back-End Route
+Route::post("/userRegistration",[UserController::class,'userRegistration']);
+Route::post("/userLogin",[UserController::class,'userLogin']);
+Route::get("/userProfile",[UserController::class,'userProfile'])->middleware([TokenVerificationMiddleware::class]);
+Route::get("/userLogout",[UserController::class,'userLogout'])->middleware([TokenVerificationMiddleware::class]);
+
+
+
+
+
+
+// Route::view("/","pages.customer");
 
 
 Route::get('/customers', [CustomerController::class, 'index'])->name("customers.index");
