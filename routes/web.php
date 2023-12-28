@@ -15,7 +15,7 @@ use App\Http\Controllers\CustomerController;
 */
 
 
-// Route::view("/","pages.customer");
+Route::view("/","pages.customer");
 
 
 Route::get('/customers', [CustomerController::class, 'index'])->name("customers.index");
